@@ -2,25 +2,26 @@
 //class
 //assignment declaration
 
+import { validationResult } from "express-validator";
 
-const validateRequest = (req,res,next) =>{
+
+const validateRequest = async(req,res,next) =>{
      // validate data
-     const { name, price, imageUrl } = req.body;
-     let errors = [];
-     if (!name || name.trim() == '') {
-       errors.push('Name is required');
-     }
-     if (!price || parseFloat(price) < 1) {
-       errors.push(
-         'Price must be a positive value'
-       );
-     }
-     try {
-       const validUrl = new URL(imageUrl);
-     } catch (err) {
-       errors.push('URL is invalid');
-     }
- 
+    //1. Setup rules for validation.
+    const rules = [
+        body('name').isEmpty().withMessage('Name is required'),
+        body('price').isFloat({gt:0}).withMessage('Price should be a positive value'),
+        body('imageUrl').isUrl().withMessage('Invalid url'),
+    ];
+
+    //2. run those rules
+    await Promise.all(rules.map(rule=> rule.run(req)))
+
+    //3.check if there are any errors after running the rules.
+    var errors = validationResult(req);
+
+    //4. if errors , return the error message
+    
      if (errors.length > 0) {
        return res.render('new-product', {
          errorMessage: errors[0],
