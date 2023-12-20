@@ -14,9 +14,7 @@ export default class ProductModel {
       const index = products.findIndex(
         (p) => p.id== productObj.id
       );
-
-      product[index] = productObj;
-     
+      products[index] = productObj;
 
     }
   

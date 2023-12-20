@@ -32,10 +32,11 @@ class ProductsController {
 
   }
   postUpdateProduct(req,res){
-    ProductModel.add(req.body);
+    ProductModel.update(req.body);
     var products = ProductModel.getAll();
     res.render('index', { products });
   }
 }
+
 
 export default ProductsController;

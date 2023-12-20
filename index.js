@@ -24,6 +24,8 @@ app.get(
 );
 app.get('/update-product/:id',productsController.getUpdateProductView);
 app.post('/', validationMiddleware ,productsController.postAddProduct);
+
+
 app.post('/update-product',productsController.postUpdateProduct);
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
