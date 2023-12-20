@@ -23,6 +23,7 @@ app.get(
   productsController.getAddProduct
 );
 app.get('/update-product/:id',productsController.getUpdateProductView);
+app.get('/delete-product/:id',productsController.deleteProduct);
 app.post('/', validationMiddleware ,productsController.postAddProduct);
 
 

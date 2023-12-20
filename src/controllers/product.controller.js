@@ -36,6 +36,20 @@ class ProductsController {
     var products = ProductModel.getAll();
     res.render('index', { products });
   }
+
+  deleteProduct(req, res){
+    const id = req.params.id;
+    const productFound = ProductModel.getById(id);
+    if(!productFound){
+      return res.status(401).send('Product not found');
+    }
+    else{
+      ProductModel.delete(id);
+      var products = ProductModel.getAll();
+      res.render('index', { products });
+
+    }
+  }
 }
 
 
