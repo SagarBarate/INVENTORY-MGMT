@@ -1,9 +1,10 @@
 import express from 'express';
 import ProductsController from './src/controllers/product.controller.js';
+import UserController from './src/controllers/user.controller.js';
 import ejsLayouts from 'express-ejs-layouts';
 import path from 'path';
 import validationMiddleware from './src/middlewares/validation.middleware.js';
-
+import {uploadFile} from './src/middlewares/file.upload.middleware.js'
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.use(express.static('public'));
 
 const productsController =
   new ProductsController();
+
+const usersController = new UserController();
 
 app.use(ejsLayouts);
 app.use(express.json());
@@ -23,13 +26,13 @@ app.set(
 
 app.get('/', productsController.getProducts);
 app.get(
-  '/add-product',
+  '/new-product',
   productsController.getAddProduct
 );
 app.get('/update-product/:id',productsController.getUpdateProductView);
 app.post('/delete-product/:id',productsController.deleteProduct);
-app.post('/', validationMiddleware ,productsController.postAddProduct);
-
+app.post('/', uploadFile.single('imageUrl'),validationMiddleware ,productsController.postAddProduct);
+app.get('/register', usersController.getRegister);
 
 app.post('/update-product',productsController.postUpdateProduct);
 app.listen(3000, () => {
