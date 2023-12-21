@@ -33,6 +33,10 @@ app.get('/update-product/:id',productsController.getUpdateProductView);
 app.post('/delete-product/:id',productsController.deleteProduct);
 app.post('/', uploadFile.single('imageUrl'),validationMiddleware ,productsController.postAddProduct);
 app.get('/register', usersController.getRegister);
+app.post('/register', usersController.postRegister);
+app.get('/login', usersController.getLogin);
+app.post('/login', usersController.postLogin);
+
 
 app.post('/update-product',productsController.postUpdateProduct);
 app.listen(3000, () => {
