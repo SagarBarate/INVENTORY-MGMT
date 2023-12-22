@@ -3,13 +3,19 @@ import ProductsController from './src/controllers/product.controller.js';
 import UserController from './src/controllers/user.controller.js';
 import ejsLayouts from 'express-ejs-layouts';
 import path from 'path';
+import session  from 'express-session';
 import validationMiddleware from './src/middlewares/validation.middleware.js';
 import {uploadFile} from './src/middlewares/file.upload.middleware.js'
 
 const app = express();
 
 app.use(express.static('public'));
-
+app.use(session({
+  secret:'secretKey',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
 const productsController =
   new ProductsController();
 
