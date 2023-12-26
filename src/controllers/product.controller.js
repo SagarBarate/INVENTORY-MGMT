@@ -3,7 +3,10 @@ import ProductModel from '../models/product.model.js';
 class ProductsController {
   getProducts(req, res, next) {
     var products = ProductModel.getAll();
-    res.render('index', { products, userEmail: req.session.userEmail });
+    res.render('index', {
+      products,
+      userEmail: req.session.userEmail,
+    });
   }
 
   getAddProduct(req, res, next) {
@@ -19,7 +22,10 @@ class ProductsController {
       'images/' + req.file.filename;
     ProductModel.add(name, desc, price, imageUrl);
     var products = ProductModel.getAll();
-    res.render('index', { products, userEmail: req.session.userEmail });
+    res.render('index', {
+      products,
+      userEmail: req.session.userEmail,
+    });
   }
 
   getUpdateProductView(req, res, next) {
